@@ -17,8 +17,24 @@ class User:
 # Takes in two user objects and outputs a float denoting compatibility
 def compute_score(user1, user2):
     # YOUR CODE HERE
-    return 0
+    return gender_score(user1, user2) * responses_score(user1.responses, user2.responses)
+    #return 0
 
+def gender_score(user1, user2):
+    return 1 if (user2.gender in user1.preferences) and (user1.gender in user2.preferences) else 0
+
+# returns a score between two user responses
+def responses_score(lst1, lst2):
+    max_score = 4 * len(lst1)
+    return sum(compatibility_list(lst1, lst2)) / max_score
+
+ # returns a list based on compatibility
+def compatibility_list(lst1, lst2):
+     return [compatibility_score(x, y) for x, y in zip(lst1, lst2)]
+
+def compatibility_score(resp1, resp2):
+    return 4 - abs(resp1 - resp2)
+    
 
 if __name__ == '__main__':
     # Make sure input file is valid
